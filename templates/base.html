@@ -5,11 +5,47 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script type="text/javascript" src="{{url_for('static', filename='js/main.js')}}"></script>
     <title>JobTrack</title>
 </head>
 <body>
+    <header class="l-header p-header">
+    <div class="p-header__inner">
+      <h1 class="p-header__title">
+          JobTrack
+      </h1>
+      <div class="p-header__hamburger">
+        <button class="c-hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <nav class="p-header__nav p-nav">
+        <div class="p-nav__inner">
+          <ul class="p-nav__list">
+            <li class="p-nav__item">
+              <a href="" class="p-nav__link">
+                ダッシュボード
+              </a>
+            </li>
+            <li class="p-nav__item">
+              <a href="" class="p-nav__link">
+                企業一覧
+              </a>
+            </li>
+            <li class="p-nav__item">
+              <a href="" class="p-nav__link">
+                ＋ 企業を登録
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
     {%  block content %}
     {% endblock %}
 </body>

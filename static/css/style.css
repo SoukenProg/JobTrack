@@ -1,0 +1,140 @@
+/* --- ヘッダー・ハンバーガー共通 --- */
+.l-header {
+  display: block;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+}
+
+.p-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; /* Headerの高さの基準を設ける */
+  padding: 0 20px;
+}
+
+/* --- ハンバーガーボタン --- */
+.p-header__hamburger {
+  z-index: 1000; /* ナビゲーションより確実に手前にする */
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.c-hamburger {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: transparent;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.c-hamburger span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  width: 24px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: black;
+  transition: all 0.4s;
+}
+
+.c-hamburger span:nth-of-type(1) { top: 24px; }
+.c-hamburger span:nth-of-type(2) { top: 30px; }
+.c-hamburger span:nth-of-type(3) { top: 36px; }
+
+/* --- ハンバーガーアニメーション --- */
+.c-hamburger.is-active span:nth-of-type(1) {
+  top: 30px;
+  transform: translateX(-50%) rotate(225deg);
+}
+.c-hamburger.is-active span:nth-of-type(2) {
+  opacity: 0;
+}
+.c-hamburger.is-active span:nth-of-type(3) {
+  top: 30px;
+  transform: translateX(-50%) rotate(-225deg);
+}
+
+/* --- ナビゲーションメニュー（スマホ用） --- */
+.p-header__nav {
+  z-index: 900;
+  position: fixed;
+  top: 0;
+  right: -100%; /* 画面外に隠す */
+  visibility: hidden; /* クリックできないようにする */
+  width: 100%;
+  height: 100vh;
+  background: transparent;
+  opacity: 0;
+  transition: right 0.6s ease, opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* アクティブ時 */
+.p-header__nav.is-active {
+  right: 0;
+  visibility: visible;
+  opacity: 1;
+  background-color: #fff;
+}
+
+.p-nav__list {
+  display: flex;
+  flex-direction: column; /* スマホ時は縦並び */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.p-nav__item {
+  width: 100%;
+  text-align: center;
+}
+
+.p-nav__link {
+  color: black;
+  display: block;
+  padding: 20px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* --- メディアクエリ（PC用） --- */
+@media screen and (min-width: 768px) {
+  .p-header__hamburger {
+    display: none; /* PCではハンバーガーを非表示 */
+  }
+
+  /* ナビゲーションのスマホ時設定をリセット */
+  .p-header__nav {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    width: auto;
+    height: auto;
+    background: transparent;
+    right: auto;
+    top: auto;
+    transition: none;
+  }
+
+  .p-nav__list {
+    flex-direction: row; /* PC時は横並び */
+    padding: 0;
+  }
+
+  .p-nav__link {
+    width: auto;
+    padding: 15px 20px;
+  }
+}
