@@ -4,7 +4,7 @@ bp = Blueprint("dashboard", __name__)
 
 
 @bp.route("/")
-def index()
+def dashboard():
     #モックデータ
     stats = {
         "companies": 0,
