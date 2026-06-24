@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from models import db
 
 from routes.dashboard import bp as dashboard_bp
+from routes.companies import bp as company_bp
 
 def create_app():
     app = Flask(__name__)
@@ -17,6 +18,7 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(company_bp)
     with app.app_context():
         db.create_all()
     return app
