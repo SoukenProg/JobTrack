@@ -1,4 +1,35 @@
 {%  extends "base.html" %}
+{% block title %}ダッシュボード{% endblock %}
 {%  block content %}
+<div>
+    <div>
+        <span>DASHBOARD</span>
+        <h1>ダッシュボード</h1>
+    </div>
+    <a href="/">企業を登録する</a>
+</div>
 
+<div>
+    {%
+        set stat_cards =[
+        ("登録済",stats.companies,"社","#a0d8ef"),
+        ("選考中",stats.active,"社","#f7b97d"),
+        ("面接予定",stats.interview,"件","#938cbf"),
+        ("内定",stats.success,"社","#009856")
+    ]
+    %}
+    {%  for label,value,unit,color in stat_cards %}
+        <div>
+            <div>
+                <div>
+                    <span>{{ label }}</span>
+                    <div>
+                        <span>{{ value }}</span>
+                        <span>{{ unit }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
