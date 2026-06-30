@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-container">
+    <section class="page-header">
+        <div>
+            <h1>{{ company.company_name }}</h1>
+            <p class="page-description">企業情報の詳細を確認します。</p>
+        </div>
+
+        <a href="{{ url_for('companies.index') }}" class="btn btn-link page-back-link">
+            企業一覧へ戻る
+        </a>
+    </section>
+
+    <div class="detail-card">
+        <dl class="detail-list">
+            <div class="detail-row">
+                <dt>企業名</dt>
+                <dd>{{ company.company_name }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>業界</dt>
+                <dd>{{ company.industry }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>所在地</dt>
+                <dd>{{ company.location or "-" }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>Webサイト</dt>
+                <dd>
+                    {% if company.website %}
+                        <a href="{{ company.website }}" target="_blank" rel="noopener noreferrer">
+                            {{ company.website }}
+                        </a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>メモ</dt>
+                <dd class="detail-memo">{{ company.memo or "-" }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>登録日</dt>
+                <dd>{{ company.created_at.strftime("%Y-%m-%d") }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>更新日</dt>
+                <dd>{{ company.updated_at.strftime("%Y-%m-%d") }}</dd>
+            </div>
+        </dl>
+
+        <div class="form-actions">
+            <a
+                href="{{ url_for('companies.edit', company_id=company.id) }}"
+                class="btn btn-primary"
+            >
+                編集する
+            </a>
+
+            <form
+                method="post"
+                action="{{ url_for('companies.delete', company_id=company.id) }}"
+                onsubmit="return confirm('この企業情報を削除しますか？');"
+            >
+                <button type="submit" class="btn btn-outline-danger">
+                    削除する
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

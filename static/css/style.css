@@ -359,7 +359,63 @@ a:hover {
   border-color: #cbd5e1;
   color: #0f172a;
 }
+/* =========================
+   Detail
+========================= */
 
+.detail-card {
+  max-width: 760px;
+  padding: 30px;
+  border: 1px solid #d9dee7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.detail-list {
+  margin: 0;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-row:first-child {
+  padding-top: 0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row dt {
+  color: #475569;
+  font-weight: 700;
+}
+
+.detail-row dd {
+  margin: 0;
+  color: #0f172a;
+}
+
+.detail-memo {
+  white-space: pre-wrap;
+}
+
+@media screen and (max-width: 767px) {
+  .detail-card {
+    padding: 24px 20px;
+  }
+
+  .detail-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
 /* =========================
    Desktop Navigation
 ========================= */

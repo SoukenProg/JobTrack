@@ -30,7 +30,9 @@
                         {% for company in companies %}
                         <tr>
                             <td class="fw-semibold">
-                                {{ company.company_name }}
+                                <a href="{{ url_for('companies.detail', company_id=company.id) }}">
+                                    {{ company.company_name }}
+                                </a>
                             </td>
                             <td>{{ company.industry }}</td>
                             <td>{{ company.location or "-" }}</td>

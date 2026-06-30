@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-container">
+    <section class="page-header">
+        <div>
+            <h1>企業編集</h1>
+            <p class="page-description">登録済みの企業情報を更新します。</p>
+        </div>
+
+        <a
+            href="{{ url_for('companies.detail', company_id=company.id) }}"
+            class="btn btn-link page-back-link"
+        >
+            詳細へ戻る
+        </a>
+    </section>
+
+    <form method="post" class="form-card">
+        <div class="form-field">
+            <label for="company_name" class="form-label">企業名</label>
+            <input
+                type="text"
+                id="company_name"
+                name="company_name"
+                class="form-control"
+                value="{{ company.company_name }}"
+                required
+            >
+        </div>
+
+        <div class="form-field">
+            <label for="industry" class="form-label">業界</label>
+            <input
+                type="text"
+                id="industry"
+                name="industry"
+                class="form-control"
+                value="{{ company.industry }}"
+                required
+            >
+        </div>
+
+        <div class="form-field">
+            <label for="location" class="form-label">所在地</label>
+            <input
+                type="text"
+                id="location"
+                name="location"
+                class="form-control"
+                value="{{ company.location or '' }}"
+                placeholder="例：東京都渋谷区"
+            >
+        </div>
+
+        <div class="form-field">
+            <label for="website" class="form-label">Webサイト</label>
+            <input
+                type="url"
+                id="website"
+                name="website"
+                class="form-control"
+                value="{{ company.website or '' }}"
+                placeholder="https://example.com"
+            >
+        </div>
+
+        <div class="form-field">
+            <label for="memo" class="form-label">メモ</label>
+            <textarea
+                id="memo"
+                name="memo"
+                rows="5"
+                class="form-control"
+                placeholder="企業の特徴、気になる点、応募前に確認したいことなど"
+            >{{ company.memo or '' }}</textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">更新する</button>
+            <a
+                href="{{ url_for('companies.detail', company_id=company.id) }}"
+                class="btn btn-secondary"
+            >
+                キャンセル
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

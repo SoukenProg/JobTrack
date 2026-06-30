@@ -37,7 +37,7 @@ def new():
 @bp.route("/<int:company_id>")
 def detail(company_id):
     company = db.get_or_404(Companies, company_id)
-    return render_template("companies/detail.html")
+    return render_template("companies/detail.html",company=company)
 
 @bp.route("/<int:company_id>/edit", methods=["GET", "POST"])
 def edit(company_id):
@@ -46,9 +46,9 @@ def edit(company_id):
     if request.method == "POST":
         company.company_name = request.form["company_name"].strip()
         company.industry = request.form["industry"].strip()
-        company.website = request.form["website"].strip()
-        company.location = request.form["location"].strip()
-        company.memo = request.form["memo"].strip()
+        company.website = request.form.get("website","").strip()
+        company.location = request.form.get("location","").strip()
+        company.memo = request.form.get("memo","").strip()
 
         db.session.add(company)
         db.session.commit()
