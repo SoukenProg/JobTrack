@@ -64,4 +64,34 @@ def register_commands(app):
 
         db.session.commit()
 
-        print(f"companies のモックデータを追加しました。追加: {created_count}件 / スキップ: {skipped_count}件")
+        print(
+            f"companies のモックデータを追加しました。"
+            f"追加: {created_count}件 / スキップ: {skipped_count}件"
+        )
+
+    @app.cli.command("clear-seed")
+    def clear_seed():
+        seed_company_names = [
+            "株式会社テックソリューション",
+            "株式会社デジタルワークス",
+            "日本クラウドシステム株式会社",
+            "株式会社ビジネスサポートラボ",
+            "フューチャーリンク株式会社",
+        ]
+
+        deleted_count = 0
+
+        for company_name in seed_company_names:
+            company = db.session.execute(
+                select(Companies).where(Companies.company_name == company_name)
+            ).scalar_one_or_none()
+
+            if company is None:
+                continue
+
+            db.session.delete(company)
+            deleted_count += 1
+
+        db.session.commit()
+
+        print(f"モック企業データを削除しました。削除: {deleted_count}件")
