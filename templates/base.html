@@ -29,17 +29,17 @@
         <div class="p-nav__inner">
           <ul class="p-nav__list">
             <li class="p-nav__item">
-              <a href="" class="p-nav__link">
+              <a href=" {{ url_for('dashboard.index') }}" class="p-nav__link">
                 ダッシュボード
               </a>
             </li>
             <li class="p-nav__item">
-              <a href="" class="p-nav__link">
+              <a href="{{ url_for('companies.index') }}" class="p-nav__link">
                 企業一覧
               </a>
             </li>
             <li class="p-nav__item">
-              <a href="" class="p-nav__link">
+              <a href="{{ url_for('companies.new') }}" class="p-nav__link">
                 ＋ 企業を登録
               </a>
             </li>

@@ -1,30 +1,61 @@
-/* --- ヘッダー・ハンバーガー共通 --- */
+/* =========================
+   Base
+========================= */
+
+body {
+  margin: 0;
+  color: #0f172a;
+  background: #f4f7fb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================
+   Header
+========================= */
+
 .l-header {
-  display: block;
   z-index: 999;
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   width: 100%;
-  background: #233B6C;
+  background: #233b6c;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.18);
 }
 
 .p-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px; /* Headerの高さの基準を設ける */
+  height: 60px;
   padding: 0 20px;
 }
-.p-header__title{
-  color: azure;
+
+.p-header__title {
+  margin: 0;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
 }
 
-/* --- ハンバーガーボタン --- */
+
+/* =========================
+   Hamburger
+========================= */
+
 .p-header__hamburger {
-  z-index: 1000; /* ナビゲーションより確実に手前にする */
-  color: azure;
+  z-index: 1000;
   position: relative;
   width: 60px;
   height: 60px;
@@ -32,7 +63,6 @@
 
 .c-hamburger {
   position: relative;
-  color: azure;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -45,63 +75,75 @@
   display: block;
   position: absolute;
   left: 50%;
-  width: 24px;
+  width: 28px;
   height: 2px;
   transform: translateX(-50%);
-  background: azure;
+  background: #fff;
   transition: all 0.4s;
 }
 
-.c-hamburger span:nth-of-type(1) { top: 24px; }
-.c-hamburger span:nth-of-type(2) { top: 30px; }
-.c-hamburger span:nth-of-type(3) { top: 36px; }
+.c-hamburger span:nth-of-type(1) {
+  top: 22px;
+}
 
-/* --- ハンバーガーアニメーション --- */
+.c-hamburger span:nth-of-type(2) {
+  top: 30px;
+}
+
+.c-hamburger span:nth-of-type(3) {
+  top: 38px;
+}
+
 .c-hamburger.is-active span:nth-of-type(1) {
-  background: aqua;
   top: 30px;
   transform: translateX(-50%) rotate(225deg);
+  background: #67e8f9;
 }
+
 .c-hamburger.is-active span:nth-of-type(2) {
   opacity: 0;
 }
+
 .c-hamburger.is-active span:nth-of-type(3) {
-  background: aqua;
   top: 30px;
   transform: translateX(-50%) rotate(-225deg);
+  background: #67e8f9;
 }
 
-/* --- ナビゲーションメニュー（スマホ用） --- */
+
+/* =========================
+   Navigation
+========================= */
+
 .p-header__nav {
   z-index: 900;
   position: fixed;
   top: 0;
-  right: -100%; /* 画面外に隠す */
-  visibility: hidden; /* クリックできないようにする */
+  right: -100%;
+  visibility: hidden;
   width: 100%;
   height: 100vh;
-  background: transparent;
+  background: #233b6c;
   opacity: 0;
   transition: right 0.6s ease, opacity 0.6s ease, visibility 0.6s ease;
 }
 
-/* アクティブ時 */
 .p-header__nav.is-active {
   right: 0;
   visibility: visible;
   opacity: 1;
-  background-color: #233B6C;
 }
 
 .p-nav__list {
   display: flex;
-  flex-direction: column; /* スマホ時は縦並び */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: azure;
   width: 100%;
   height: 100%;
   padding: 20px 0;
+  margin: 0;
+  list-style: none;
 }
 
 .p-nav__item {
@@ -110,45 +152,280 @@
 }
 
 .p-nav__link {
-  color: azure;
   display: block;
-  padding: 20px;
   width: 100%;
+  padding: 20px;
+  color: #fff;
   white-space: nowrap;
 }
 
-/* --- メディアクエリ（PC用） --- */
+.p-nav__link:hover {
+  color: #67e8f9;
+  text-decoration: none;
+}
+
+
+/* =========================
+   Main Layout
+========================= */
+
+.l-main {
+  margin-top: 60px;
+  min-height: calc(100vh - 60px);
+  background: #f4f7fb;
+}
+
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.page-description {
+  margin: 12px 0 0;
+  color: #64748b;
+  font-size: 18px;
+}
+
+.page-back-link {
+  padding-top: 8px;
+  white-space: nowrap;
+}
+
+
+/* =========================
+   Form
+========================= */
+
+.form-card {
+  max-width: 760px;
+  padding: 30px;
+  border: 1px solid #d9dee7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.form-field {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.form-field .form-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #111827;
+  font-weight: 700;
+}
+
+.form-field .form-control {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  min-height: 56px;
+  padding: 14px 16px;
+  border: 1px solid #cfd8e3;
+  border-radius: 12px;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.form-field .form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+}
+
+.form-field .form-control::placeholder {
+  color: #64748b;
+}
+
+.form-field textarea.form-control {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+
+/* =========================
+   Company List / Table
+========================= */
+
+.table-card {
+  overflow: hidden;
+  border: 1px solid #d9dee7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  white-space: nowrap;
+  color: #334155;
+  font-weight: 700;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table a {
+  font-weight: 500;
+}
+
+
+/* =========================
+   Empty State
+========================= */
+
+.empty-state {
+  padding: 40px 24px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  background: #fff;
+  text-align: center;
+}
+
+.empty-state p {
+  margin-bottom: 16px;
+  color: #64748b;
+}
+
+
+/* =========================
+   Bootstrap Adjustment
+========================= */
+
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+
+/* =========================
+   Desktop Navigation
+========================= */
+
 @media screen and (min-width: 768px) {
   .p-header__hamburger {
-    display: none; /* PCではハンバーガーを非表示 */
+    display: none;
   }
 
-  /* ナビゲーションのスマホ時設定をリセット */
   .p-header__nav {
     position: static;
     visibility: visible;
-    opacity: 1;
     width: auto;
     height: auto;
     background: transparent;
-    right: auto;
-    top: auto;
+    opacity: 1;
     transition: none;
   }
 
   .p-nav__list {
-    flex-direction: row; /* PC時は横並び */
+    flex-direction: row;
+    justify-content: flex-end;
+    height: auto;
     padding: 0;
+  }
+
+  .p-nav__item {
+    width: auto;
   }
 
   .p-nav__link {
     width: auto;
-    padding: 15px 20px;
+    padding: 18px 16px;
   }
 }
 
-/*メインページ*/
-.l-main {
-  margin-top: 60px;
-  padding: 10px 20px 0;
+
+/* =========================
+   Mobile
+========================= */
+
+@media screen and (max-width: 767px) {
+  .p-header__title {
+    font-size: 24px;
+  }
+
+  .page-container {
+    padding: 32px 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .page-header h1 {
+    font-size: 32px;
+  }
+
+  .page-description {
+    font-size: 16px;
+  }
+
+  .form-card {
+    padding: 24px 20px;
+  }
+
+  .form-field .form-control {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
 }
