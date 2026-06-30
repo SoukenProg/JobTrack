@@ -1,13 +1,13 @@
 {%  extends "base.html" %}
 {% block title %}ダッシュボード{% endblock %}
 {%  block content %}
-<div>
+<section class="page-header">
     <div>
         <span>DASHBOARD</span>
         <h1>ダッシュボード</h1>
     </div>
-    <a href="/">企業を登録する</a>
-</div>
+    <a href="{{ url_for("companies.new") }}">企業を登録する</a>
+</section>
 
 <div>
     {%
