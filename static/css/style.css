@@ -321,18 +321,31 @@ a:hover {
 ========================= */
 
 .btn {
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 10px;
   font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.btn:hover {
+  text-decoration: none;
 }
 
 .btn-primary {
   background-color: #2563eb;
   border-color: #2563eb;
+  color: #fff;
 }
 
 .btn-primary:hover {
   background-color: #1d4ed8;
   border-color: #1d4ed8;
+  color: #fff;
 }
 
 .btn-secondary {
@@ -346,7 +359,6 @@ a:hover {
   border-color: #cbd5e1;
   color: #0f172a;
 }
-
 
 /* =========================
    Desktop Navigation
