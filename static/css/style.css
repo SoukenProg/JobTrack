@@ -176,7 +176,7 @@ a:hover {
 }
 
 .page-container {
-  max-width: 900px;
+  /*max-width: 900px;*/
   margin: 0 auto;
   padding: 56px 24px;
 }
@@ -214,7 +214,7 @@ a:hover {
 ========================= */
 
 .form-card {
-  max-width: 760px;
+  /*max-width: 760px;*/
   padding: 30px;
   border: 1px solid #d9dee7;
   border-radius: 16px;
@@ -237,7 +237,7 @@ a:hover {
 .form-field .form-control {
   display: block;
   width: 100%;
-  max-width: 560px;
+  /*max-width: 560px;*/
   min-height: 56px;
   padding: 14px 16px;
   border: 1px solid #cfd8e3;
@@ -364,7 +364,7 @@ a:hover {
 ========================= */
 
 .detail-card {
-  max-width: 760px;
+  /*max-width: 760px;*/
   padding: 30px;
   border: 1px solid #d9dee7;
   border-radius: 16px;
@@ -417,42 +417,96 @@ a:hover {
   }
 }
 /* =========================
-   Desktop Navigation
+   Dashboard
 ========================= */
 
-@media screen and (min-width: 768px) {
-  .p-header__hamburger {
-    display: none;
-  }
+.detail-card > .row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
 
-  .p-header__nav {
-    position: static;
-    visibility: visible;
-    width: auto;
-    height: auto;
-    background: transparent;
-    opacity: 1;
-    transition: none;
-  }
+.detail-card > .row > [class*="col-"] {
+  width: auto;
+  max-width: none;
+  padding: 0;
+}
 
-  .p-nav__list {
-    flex-direction: row;
-    justify-content: flex-end;
-    height: auto;
-    padding: 0;
-  }
+.dashboard-card {
+  min-height: 160px;
+  border-radius: 16px;
+}
 
-  .p-nav__item {
-    width: auto;
-  }
-
-  .p-nav__link {
-    width: auto;
-    padding: 18px 16px;
+@media screen and (max-width: 767px) {
+  .detail-card > .row {
+    grid-template-columns: 1fr;
   }
 }
 
+/* =========================
+   Company List / Table
+========================= */
 
+.table-card {
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #d9dee7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.company-table {
+  margin-bottom: 0;
+  background: #fff;
+}
+
+.company-table thead th {
+  padding: 18px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.company-table tbody td {
+  padding: 18px 20px;
+  border-bottom: 1px solid #eef2f7;
+  color: #0f172a;
+  vertical-align: middle;
+}
+
+.company-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.company-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.company-table a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.company-table a:hover {
+  text-decoration: underline;
+}
+
+.company-name {
+  min-width: 220px;
+}
+
+.company-name a {
+  color: #2563eb;
+}
+
+.table-responsive {
+  width: 100%;
+}
 /* =========================
    Mobile
 ========================= */
