@@ -1,80 +1,80 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="page-container">
-    <section class="page-header">
-        <div>
-            <h1>企業登録</h1>
-            <p class="page-description">応募先企業の基本情報を登録します。</p>
-        </div>
+    <div class="page-container">
+        <section class="page-header">
+            <div>
+                <h1>企業登録</h1>
+                <p class="page-description">応募先企業の基本情報を登録します。</p>
+            </div>
 
-        <a href="{{ url_for('companies.index') }}" class="btn btn-link page-back-link">
-            企業一覧へ戻る
-        </a>
-    </section>
+            <a href="{{ url_for('companies.index') }}" class="btn btn-link page-back-link">
+                企業一覧へ戻る
+            </a>
+        </section>
 
-    <form method="post" class="form-card">
-    <div class="form-field">
-        <label for="company_name" class="form-label">企業名</label>
-        <input
-            type="text"
-            id="company_name"
-            name="company_name"
-            class="form-control"
-            placeholder="例：株式会社サンプル"
-            required
-        >
+        <form method="post" class="form-card">
+            <div class="form-field">
+                <label for="company_name" class="form-label">企業名</label>
+                <input
+                        type="text"
+                        id="company_name"
+                        name="company_name"
+                        class="form-control"
+                        placeholder="例：株式会社サンプル"
+                        required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="industry" class="form-label">業界</label>
+                <input
+                        type="text"
+                        id="industry"
+                        name="industry"
+                        class="form-control"
+                        placeholder="例：IT・通信"
+                        required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="location" class="form-label">所在地</label>
+                <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        class="form-control"
+                        placeholder="例：東京都渋谷区"
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="website" class="form-label">Webサイト</label>
+                <input
+                        type="url"
+                        id="website"
+                        name="website"
+                        class="form-control"
+                        placeholder="https://example.com"
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="memo" class="form-label">メモ</label>
+                <textarea
+                        id="memo"
+                        name="memo"
+                        rows="5"
+                        class="form-control"
+                        placeholder="企業の特徴、気になる点、応募前に確認したいことなど"
+                ></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">登録する</button>
+                <a href="{{ url_for('companies.index') }}" class="btn btn-secondary">キャンセル</a>
+            </div>
+        </form>
     </div>
-
-    <div class="form-field">
-        <label for="industry" class="form-label">業界</label>
-        <input
-            type="text"
-            id="industry"
-            name="industry"
-            class="form-control"
-            placeholder="例：IT・通信"
-            required
-        >
-    </div>
-
-    <div class="form-field">
-        <label for="location" class="form-label">所在地</label>
-        <input
-            type="text"
-            id="location"
-            name="location"
-            class="form-control"
-            placeholder="例：東京都渋谷区"
-        >
-    </div>
-
-    <div class="form-field">
-        <label for="website" class="form-label">Webサイト</label>
-        <input
-            type="url"
-            id="website"
-            name="website"
-            class="form-control"
-            placeholder="https://example.com"
-        >
-    </div>
-
-    <div class="form-field">
-        <label for="memo" class="form-label">メモ</label>
-        <textarea
-            id="memo"
-            name="memo"
-            rows="5"
-            class="form-control"
-            placeholder="企業の特徴、気になる点、応募前に確認したいことなど"
-        ></textarea>
-    </div>
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">登録する</button>
-        <a href="{{ url_for('companies.index') }}" class="btn btn-secondary">キャンセル</a>
-    </div>
-</form>
-</div>
 {% endblock %}

@@ -435,6 +435,7 @@ a:hover {
 .dashboard-card {
   min-height: 160px;
   border-radius: 16px;
+
 }
 
 @media screen and (max-width: 767px) {

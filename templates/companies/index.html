@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="page-container companies-page">
-    <section class="page-header">
-        <div>
-            <h1>企業一覧</h1>
-            <p class="page-description">登録した応募先企業を一覧で確認できます。</p>
-        </div>
-        <a href="{{ url_for('companies.new') }}" class="btn btn-primary">
-            企業を追加
-        </a>
-    </section>
+    <div class="page-container companies-page">
+        <section class="page-header">
+            <div>
+                <h1>企業一覧</h1>
+                <p class="page-description">登録した応募先企業を一覧で確認できます。</p>
+            </div>
+            <a href="{{ url_for('companies.new') }}" class="btn btn-primary">
+                企業を追加
+            </a>
+        </section>
 
-    {% if companies %}
-        <div class="table-card">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle company-table">
-                    <thead class="table-light">
+        {% if companies %}
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle company-table">
+                        <thead class="table-light">
                         <tr>
                             <th>企業名</th>
                             <th>業界</th>
@@ -25,48 +25,48 @@
                             <th>登録日</th>
                             <th>操作</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         {% for company in companies %}
-                        <tr>
-                            <td class="fw-semibold">
-                                <a href="{{ url_for('companies.detail', company_id=company.id) }}">
-                                    {{ company.company_name }}
-                                </a>
-                            </td>
-                            <td>{{ company.industry }}</td>
-                            <td>{{ company.location or "-" }}</td>
-                            <td>
-                                {% if company.website %}
-                                    <a href="{{ company.website }}" target="_blank" rel="noopener noreferrer">
-                                        開く
+                            <tr>
+                                <td class="fw-semibold">
+                                    <a href="{{ url_for('companies.detail', company_id=company.id) }}">
+                                        {{ company.company_name }}
                                     </a>
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </td>
-                            <td>{{ company.created_at.strftime("%Y-%m-%d") }}</td>
-                            <td>
-                                <a
-                                    href="{{ url_for('companies.edit', company_id=company.id) }}"
-                                    class="btn btn-sm btn-outline-secondary"
-                                >
-                                    編集
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>{{ company.industry }}</td>
+                                <td>{{ company.location or "-" }}</td>
+                                <td>
+                                    {% if company.website %}
+                                        <a href="{{ company.website }}" target="_blank" rel="noopener noreferrer">
+                                            開く
+                                        </a>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ company.created_at.strftime("%Y-%m-%d") }}</td>
+                                <td>
+                                    <a
+                                            href="{{ url_for('companies.edit', company_id=company.id) }}"
+                                            class="btn btn-sm btn-outline-secondary"
+                                    >
+                                        編集
+                                    </a>
+                                </td>
+                            </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    {% else %}
-        <div class="empty-state">
-            <p>まだ企業情報が登録されていません。</p>
-            <a href="{{ url_for('companies.new') }}" class="btn btn-primary">
-                最初の企業を登録する
-            </a>
-        </div>
-    {% endif %}
-</div>
+        {% else %}
+            <div class="empty-state">
+                <p>まだ企業情報が登録されていません。</p>
+                <a href="{{ url_for('companies.new') }}" class="btn btn-primary">
+                    最初の企業を登録する
+                </a>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

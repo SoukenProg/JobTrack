@@ -1,46 +1,44 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 {% block title %}ダッシュボード{% endblock %}
-{%  block content %}
-<div class="page-container">
-<section class="page-header">
-    <div>
-        <p class="page-description">DASHBOARD</p>
-        <h1>ダッシュボード</h1>
-    </div>
-    <a href="{{ url_for("companies.new") }}" class="btn btn-primary">企業を登録する</a>
-</section>
+{% block content %}
+    <div class="page-container">
+        <section class="page-header">
+            <div>
+                <p class="page-description">DASHBOARD</p>
+                <h1>ダッシュボード</h1>
+            </div>
+            <a href="{{ url_for("companies.new") }}" class="btn btn-primary">企業を登録する</a>
+        </section>
 
-<div class="detail-card">
-    {%
-        set stat_cards =[
+        <div class="detail-card">
+            {% set stat_cards =[
         ("登録済",stats.companies,"社","#a0d8ef"),
         ("選考中",stats.active,"社","#f7b97d"),
         ("面接予定",stats.interview,"件","#938cbf"),
         ("内定",stats.success,"社","#009856")
-    ]
-    %}
-<div class="row g-4">
-   {% for label, value, unit, color in stat_cards %}
-        <div class="col-12 col-md-6">
-   <div class="card shadow-sm h-100 dashboard-card" style="border-left: 6px solid {{ color }};">
-                <div class="card-body p-4 d-flex flex-column justify-content-center">
+    ] %}
+            <div class="row g-4">
+                {% for label, value, unit, color in stat_cards %}
+                    <div class="col-12 col-md-6">
+                        <div class="card shadow-sm h-100 dashboard-card" style="border-left: 6px solid {{ color }};">
+                            <div class="card-body p-4 d-flex flex-column justify-content-center">
                     <span class="badge rounded-pill text-bg-light align-self-start mb-3">
                         {{ label }}
                     </span>
 
-                    <div class="d-flex align-items-end gap-2">
-                        <p class="display-5 fw-bold mb-0 lh-1">
-                            {{ value }}
-                        </p>
-                        <p class="fs-5 mb-1 text-secondary">
-                            {{ unit }}
-                        </p>
+                                <div class="d-flex align-items-end gap-2">
+                                    <p class="display-5 fw-bold mb-0 lh-1">
+                                        {{ value }}
+                                    </p>
+                                    <p class="fs-5 mb-1 text-secondary">
+                                        {{ unit }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
     </div>
-</div>
-</div>
 {% endblock %}
