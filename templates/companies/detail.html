@@ -60,13 +60,19 @@
             </dl>
 
             <div class="form-actions">
-                <a
-                        href="{{ url_for('companies.edit', company_id=company.id) }}"
+                    <a
+                        href="{{ url_for('applications.new', company_id=company.id) }}"
                         class="btn btn-primary"
-                >
-                    編集する
-                </a>
+                    >
+                        応募情報を追加
+                    </a>
 
+                    <a
+                        href="{{ url_for('companies.edit', company_id=company.id) }}"
+                        class="btn btn-secondary"
+                    >
+                        企業情報を編集
+                    </a>
                 <form
                         method="post"
                         action="{{ url_for('companies.delete', company_id=company.id) }}"

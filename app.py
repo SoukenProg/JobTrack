@@ -6,6 +6,7 @@ from commands import register_commands
 
 from routes.dashboard import bp as dashboard_bp
 from routes.companies import bp as company_bp
+from routes.applications import bp as application_bp
 
 def create_app():
     app = Flask(__name__)
@@ -21,6 +22,7 @@ def create_app():
 
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(company_bp)
+    app.register_blueprint(application_bp)
 
     # コマンドを登録
     register_commands(app)
