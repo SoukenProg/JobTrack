@@ -10,6 +10,12 @@ bp = Blueprint("dashboard", __name__)
 
 @bp.route("/")
 def index():
+    applications = db.session.execute(
+        select(Applications)
+        .join(Companies)
+        .order_by(Applications.created_at.desc())
+        .limit(10)
+    ).scalars().all()
     active_status = APPLICATION_STATUSES[1:6]
     # データ
     stats = {
@@ -22,4 +28,4 @@ def index():
             select(func.count()).select_from(Applications).where(Applications.status == "内定")),
     }
 
-    return render_template("dashboard.html", stats=stats)
+    return render_template("dashboard.html", stats=stats,applications=applications)

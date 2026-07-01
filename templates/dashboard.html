@@ -40,5 +40,75 @@
                 {% endfor %}
             </div>
         </div>
+    <section class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="h4 mb-1">応募企業一覧</h2>
+            <p class="text-secondary mb-0">
+                最近登録した応募情報を確認できます。
+            </p>
+        </div>
+
+        <a href="{{ url_for('companies.index') }}" class="btn btn-outline-primary">
+            企業一覧へ
+        </a>
+    </div>
+
+    {% if applications %}
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle company-table">
+                    <thead>
+                        <tr>
+                            <th>企業名</th>
+                            <th>応募職種</th>
+                            <th>選考状況</th>
+                            <th>応募経路</th>
+                            <th>応募日</th>
+                            <th>対応期限</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr>
+                            <td class="company-name">
+                                {{ application.company.company_name }}
+                            </td>
+                            <td>{{ application.job_title }}</td>
+                            <td>
+                                <span class="badge rounded-pill text-bg-light">
+                                    {{ application.status }}
+                                </span>
+                            </td>
+                            <td>{{ application.application_route or "-" }}</td>
+                            <td>
+                                {% if application.application_date %}
+                                    {{ application.application_date.strftime("%Y-%m-%d") }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if application.deadline %}
+                                    {{ application.deadline.strftime("%Y-%m-%d") }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>応募情報はまだ登録されていません。</p>
+            <a href="{{ url_for('companies.index') }}" class="btn btn-primary">
+                企業一覧から応募情報を登録する
+            </a>
+        </div>
+    {% endif %}
+</section>
     </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="応募企業と面接予定を一元管理する就活支援システム">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
@@ -38,11 +38,6 @@
                             企業一覧
                         </a>
                     </li>
-                    <li class="p-nav__item">
-                        <a href="{{ url_for('companies.new') }}" class="p-nav__link">
-                            ＋ 企業を登録
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -52,8 +47,6 @@
     {% block content %}
     {% endblock %}
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-jdSIJTK9l6XwXj3RixpVDXtMcA2bFd9O81RlLAwhpr2oXRqvQP88rr16IeFXTgFE"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
