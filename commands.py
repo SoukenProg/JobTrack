@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import select
 
-from models import Companies, Applications, db
+from models import Companies, Applications,Interviews, db
 
 
 def parse_date(value):
@@ -234,3 +234,122 @@ def register_commands(app):
         db.session.commit()
 
         print(f"応募情報のモックデータを削除しました。削除: {deleted_count}件")
+    @app.cli.command("seed-interviews")
+    def seed_interviews():
+        mock_interviews = [
+            {
+                "company_name": "株式会社テックソリューション",
+                "job_title": "Pythonエンジニア",
+                "interview_date": "2026-07-10 10:00",
+                "interview_type": "オンライン",
+                "interview_round": "一次面接",
+                "interviewer": "人事担当者",
+                "location": "Google Meet",
+                "prepare_memo": "Flaskアプリの設計意図、DB設計、ポートフォリオの説明を準備する。",
+                "result_memo": "",
+            },
+            {
+                "company_name": "株式会社デジタルワークス",
+                "job_title": "DXサポート職",
+                "interview_date": "2026-07-12 14:00",
+                "interview_type": "対面",
+                "interview_round": "二次面接",
+                "interviewer": "現場責任者",
+                "location": "東京都新宿区 本社",
+                "prepare_memo": "業務改善経験、Google Workspace Studio、手書きメモデータ化の説明を準備する。",
+                "result_memo": "",
+            },
+            {
+                "company_name": "日本クラウドシステム株式会社",
+                "job_title": "クラウド運用エンジニア",
+                "interview_date": "2026-07-15 16:30",
+                "interview_type": "オンライン",
+                "interview_round": "カジュアル面談",
+                "interviewer": "エンジニア担当者",
+                "location": "Zoom",
+                "prepare_memo": "クラウド・インフラへの関心、学習経験、今後伸ばしたい技術を整理する。",
+                "result_memo": "",
+            },
+        ]
+
+        created_count = 0
+        skipped_count = 0
+        missing_application_count = 0
+
+        for data in mock_interviews:
+            application = db.session.execute(
+                select(Applications)
+                .join(Companies)
+                .where(
+                    Companies.company_name == data["company_name"],
+                    Applications.job_title == data["job_title"],
+                )
+            ).scalar_one_or_none()
+
+            if application is None:
+                missing_application_count += 1
+                continue
+
+            interview_date = datetime.strptime(
+                data["interview_date"],
+                "%Y-%m-%d %H:%M",
+            )
+
+            exists = db.session.execute(
+                select(Interviews).where(
+                    Interviews.application_id == application.id,
+                    Interviews.interview_date == interview_date,
+                    Interviews.interview_round == data["interview_round"],
+                )
+            ).scalar_one_or_none()
+
+            if exists:
+                skipped_count += 1
+                continue
+
+            interview = Interviews(
+                application_id=application.id,
+                interview_date=interview_date,
+                interview_type=data["interview_type"],
+                interview_round=data["interview_round"],
+                interviewer=data["interviewer"],
+                location=data["location"],
+                prepare_memo=data["prepare_memo"],
+                result_memo=data["result_memo"],
+            )
+
+            db.session.add(interview)
+            created_count += 1
+
+        db.session.commit()
+
+        print(
+            f"面接情報のモックデータを追加しました。"
+            f"追加: {created_count}件 / "
+            f"スキップ: {skipped_count}件 / "
+            f"応募情報なし: {missing_application_count}件"
+        )
+
+    @app.cli.command("clear-seed-interviews")
+    def clear_seed_interviews():
+        seed_rounds = [
+            "一次面接",
+            "二次面接",
+            "カジュアル面談",
+        ]
+
+        deleted_count = 0
+
+        interviews = db.session.execute(
+            select(Interviews).where(
+                Interviews.interview_round.in_(seed_rounds)
+            )
+        ).scalars().all()
+
+        for interview in interviews:
+            db.session.delete(interview)
+            deleted_count += 1
+
+        db.session.commit()
+
+        print(f"面接情報のモックデータを削除しました。削除: {deleted_count}件")
