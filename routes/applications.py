@@ -1,9 +1,9 @@
-import datetime
+from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import select
 
 from models import Applications, Companies, db
-from routes.dashboard import bp
+
 
 from constants import APPLICATION_STATUSES, WORK_STYLES, APPLICATION_ROUTES
 
@@ -46,3 +46,49 @@ def new(company_id):
         work_styles=WORK_STYLES,
         application_routes=APPLICATION_ROUTES,
     )
+
+@bp.route("/applications/<int:application_id>")
+def detail(application_id):
+    application = db.get_or_404(Applications, application_id)
+
+    return render_template(
+        "applications/detail.html",
+        application=application
+    )
+
+
+@bp.route("/applications/<int:application_id>/edit", methods=["GET", "POST"])
+def edit(application_id):
+    application = db.get_or_404(Applications, application_id)
+
+    if request.method == "POST":
+        application.job_title = request.form["job_title"].strip()
+        application.application_route = request.form.get("application_route", "").strip()
+        application.status = request.form["status"].strip()
+        application.application_date = parse_date(request.form.get("application_date"))
+        application.deadline = parse_date(request.form.get("deadline"))
+        application.salary = request.form.get("salary", "").strip()
+        application.work_style = request.form.get("work_style", "").strip()
+        application.memo = request.form.get("memo", "").strip()
+
+        db.session.commit()
+
+        return redirect(url_for("applications.detail", application_id=application.id))
+
+    return render_template(
+        "applications/edit.html",
+        application=application,
+        application_statuses=APPLICATION_STATUSES,
+        work_styles=WORK_STYLES,
+        application_routes=APPLICATION_ROUTES,
+    )
+
+@bp.route("/applications/<int:application_id>/delete", methods=["POST"])
+def delete(application_id):
+    application = db.get_or_404(Applications, application_id)
+    company_id = application.company_id
+
+    db.session.delete(application)
+    db.session.commit()
+
+    return redirect(url_for("companies.detail", company_id=company_id))

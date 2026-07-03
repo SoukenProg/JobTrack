@@ -4,20 +4,18 @@
 
 {% block content %}
     <div class="page-container">
+
         <section class="page-header">
             <div>
-                <p class="page-description">APPLICATION</p>
-                <h1>応募情報登録</h1>
-                <p class="page-description">
-                    {{ company.company_name }} への応募情報を登録します。
-                </p>
+                <h1>応募情報編集</h1>
+                <p class="page-description">登録済みの応募情報を更新します。</p>
             </div>
 
             <a
-                    href="{{ url_for('companies.detail', company_id=company.id) }}"
-                    class="btn btn-secondary"
+                    href="{{ url_for('applications.detail',application_id=application.id) }}"
+                    class="btn btn-link page-back-link"
             >
-                企業詳細へ戻る
+                応募詳細へ戻る
             </a>
         </section>
 
@@ -30,16 +28,21 @@
                         name="job_title"
                         class="form-control"
                         placeholder="例：Webエンジニア"
+                        value="{{ application.job_title }}"
                         required
                 >
             </div>
-
             <div class="form-field">
                 <label for="application_route" class="form-label">応募経路</label>
                 <select id="application_route" name="application_route" class="form-select">
                     <option value="">選択してください</option>
                     {% for route in application_routes %}
-                        <option value="{{ route }}">{{ route }}</option>
+                        <option
+                                value="{{ route }}"
+                                {% if application.application_route == route %}selected{% endif %}
+                        >
+                            {{ route }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
@@ -48,7 +51,12 @@
                 <label for="status" class="form-label">選考状況</label>
                 <select id="status" name="status" class="form-select" required>
                     {% for status in application_statuses %}
-                        <option value="{{ status }}">{{ status }}</option>
+                        <option
+                                value="{{ status }}"
+                                {% if application.status == status %}selected{% endif %}
+                        >
+                            {{ status }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
@@ -60,6 +68,7 @@
                         id="application_date"
                         name="application_date"
                         class="form-control"
+                        value="{{ application.application_date.strftime('%Y-%m-%d') if application.application_date else '' }}"
                 >
                 <div class="form-text">未定の場合は空欄(yyyy/mm/dd)のままで構いません。</div>
             </div>
@@ -71,6 +80,7 @@
                         id="deadline"
                         name="deadline"
                         class="form-control"
+                        value="{{ application.deadline.strftime('%Y-%m-%d') if application.deadline else '' }}"
                 >
                 <div class="form-text">未定の場合は空欄(yyyy/mm/dd)のままで構いません。</div>
             </div>
@@ -83,18 +93,22 @@
                         name="salary"
                         class="form-control"
                         placeholder="例：月給25万円〜"
+                        value="{{ application.salary or "" }}"
                 >
             </div>
-
             <div class="form-field">
                 <label for="work_style" class="form-label">勤務形態</label>
-                <input
-                        type="text"
-                        id="work_style"
-                        name="work_style"
-                        class="form-control"
-                        placeholder="例：出社、リモート、ハイブリッド"
-                >
+                <select id="work_style" name="work_style" class="form-select">
+                    <option value="">選択してください</option>
+                    {% for work_style in work_styles %}
+                        <option
+                                value="{{ work_style }}"
+                                {% if application.work_style == work_style %}selected{% endif %}
+                        >
+                            {{ work_style }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="form-field">
@@ -105,13 +119,13 @@
                         class="form-control"
                         rows="5"
                         placeholder="応募理由、求人内容、気になる点など"
-                ></textarea>
+                >{{ application.memo or "" }}</textarea>
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">登録する</button>
+                <button type="submit" class="btn btn-primary">編集を確定する</button>
                 <a
-                        href="{{ url_for('companies.detail', company_id=company.id) }}"
+                        href="{{ url_for('applications.detail', application_id=application.id) }}"
                         class="btn btn-secondary"
                 >
                     キャンセル
