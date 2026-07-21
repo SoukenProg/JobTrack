@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="page-container">
+        <section class="page-header">
+            <div>
+                <h1>{{ company.company_name }}</h1>
+                <p class="page-description">企業情報の詳細を確認します。</p>
+            </div>
+
+            <a href="{{ url_for('companies.index') }}" class="btn btn-link page-back-link">
+                企業一覧へ戻る
+            </a>
+        </section>
+
+        <div class="detail-card">
+            <dl class="detail-list">
+                <div class="detail-row">
+                    <dt>企業名</dt>
+                    <dd>{{ company.company_name }}</dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt>業界</dt>
+                    <dd>{{ company.industry }}</dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt>所在地</dt>
+                    <dd>{{ company.location or "-" }}</dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt>Webサイト</dt>
+                    <dd>
+                        {% if company.website %}
+                            <a href="{{ company.website }}" target="_blank" rel="noopener noreferrer">
+                                {{ company.website }}
+                            </a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt>メモ</dt>
+                    <dd class="detail-memo">{{ company.memo or "-" }}</dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt>登録日</dt>
+                    <dd>{{ company.created_at.strftime("%Y-%m-%d") }}</dd>
+                </div>
+
+                <div class="detail-row">
+                    <dt>更新日</dt>
+                    <dd>{{ company.updated_at.strftime("%Y-%m-%d") }}</dd>
+                </div>
+            </dl>
+
+            <div class="form-actions">
+                    <a
+                        href="{{ url_for('applications.new', company_id=company.id) }}"
+                        class="btn btn-primary"
+                    >
+                        応募情報を追加
+                    </a>
+
+                    <a
+                        href="{{ url_for('companies.edit', company_id=company.id) }}"
+                        class="btn btn-secondary"
+                    >
+                        企業情報を編集
+                    </a>
+                <form
+                        method="post"
+                        action="{{ url_for('companies.delete', company_id=company.id) }}"
+                        onsubmit="return confirm('この企業情報を削除しますか？');"
+                >
+                    <button type="submit" class="btn btn-outline-danger">
+                        削除する
+                    </button>
+                </form>
+            </div>
+        </div>
+    <section class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="h4 mb-1">応募情報</h2>
+            <p class="text-secondary mb-0">
+                この企業に対する応募履歴を管理します。
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('applications.new', company_id=company.id) }}"
+            class="btn btn-primary"
+        >
+            応募情報を追加
+        </a>
+    </div>
+
+    {% if company.applications %}
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle company-table">
+                    <thead>
+                        <tr>
+                            <th>応募職種</th>
+                            <th>選考状況</th>
+                            <th>応募経路</th>
+                            <th>応募日</th>
+                            <th>対応期限</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in company.applications %}
+                        <tr>
+                            <td class="fw-semibold">
+                                <a href="{{ url_for('applications.detail', application_id=application.id) }}">
+                                    {{ application.job_title }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill text-bg-light">
+                                    {{ application.status }}
+                                </span>
+                            </td>
+                            <td>{{ application.application_route or "-" }}</td>
+                            <td>
+                                {% if application.application_date %}
+                                    {{ application.application_date.strftime("%Y-%m-%d") }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if application.deadline %}
+                                    {{ application.deadline.strftime("%Y-%m-%d") }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a
+                                        href="{{ url_for('applications.detail', application_id=application.id) }}"
+                                        class="btn btn-sm btn-outline-primary"
+                                    >
+                                        詳細
+                                    </a>
+                                    <a
+                                        href="{{ url_for('applications.edit', application_id=application.id) }}"
+                                        class="btn btn-sm btn-outline-secondary"
+                                    >
+                                        編集
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>この企業への応募情報はまだ登録されていません。</p>
+        </div>
+    {% endif %}
+</section>
+    </div>
+{% endblock %}
