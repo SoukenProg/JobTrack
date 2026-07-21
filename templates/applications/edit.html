@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}応募情報登録{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+
+        <section class="page-header">
+            <div>
+                <h1>応募情報編集</h1>
+                <p class="page-description">登録済みの応募情報を更新します。</p>
+            </div>
+
+            <a
+                    href="{{ url_for('applications.detail',application_id=application.id) }}"
+                    class="btn btn-link page-back-link"
+            >
+                応募詳細へ戻る
+            </a>
+        </section>
+
+        <form method="post" class="form-card">
+            <div class="form-field">
+                <label for="job_title" class="form-label">応募職種</label>
+                <input
+                        type="text"
+                        id="job_title"
+                        name="job_title"
+                        class="form-control"
+                        placeholder="例：Webエンジニア"
+                        value="{{ application.job_title }}"
+                        required
+                >
+            </div>
+            <div class="form-field">
+                <label for="application_route" class="form-label">応募経路</label>
+                <select id="application_route" name="application_route" class="form-select">
+                    <option value="">選択してください</option>
+                    {% for route in application_routes %}
+                        <option
+                                value="{{ route }}"
+                                {% if application.application_route == route %}selected{% endif %}
+                        >
+                            {{ route }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="status" class="form-label">選考状況</label>
+                <select id="status" name="status" class="form-select" required>
+                    {% for status in application_statuses %}
+                        <option
+                                value="{{ status }}"
+                                {% if application.status == status %}selected{% endif %}
+                        >
+                            {{ status }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="application_date" class="form-label">応募日</label>
+                <input
+                        type="date"
+                        id="application_date"
+                        name="application_date"
+                        class="form-control"
+                        value="{{ application.application_date.strftime('%Y-%m-%d') if application.application_date else '' }}"
+                >
+                <div class="form-text">未定の場合は空欄(yyyy/mm/dd)のままで構いません。</div>
+            </div>
+
+            <div class="form-field">
+                <label for="deadline" class="form-label">対応期限</label>
+                <input
+                        type="date"
+                        id="deadline"
+                        name="deadline"
+                        class="form-control"
+                        value="{{ application.deadline.strftime('%Y-%m-%d') if application.deadline else '' }}"
+                >
+                <div class="form-text">未定の場合は空欄(yyyy/mm/dd)のままで構いません。</div>
+            </div>
+
+            <div class="form-field">
+                <label for="salary" class="form-label">給与</label>
+                <input
+                        type="text"
+                        id="salary"
+                        name="salary"
+                        class="form-control"
+                        placeholder="例：月給25万円〜"
+                        value="{{ application.salary or "" }}"
+                >
+            </div>
+            <div class="form-field">
+                <label for="work_style" class="form-label">勤務形態</label>
+                <select id="work_style" name="work_style" class="form-select">
+                    <option value="">選択してください</option>
+                    {% for work_style in work_styles %}
+                        <option
+                                value="{{ work_style }}"
+                                {% if application.work_style == work_style %}selected{% endif %}
+                        >
+                            {{ work_style }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="memo" class="form-label">応募メモ</label>
+                <textarea
+                        id="memo"
+                        name="memo"
+                        class="form-control"
+                        rows="5"
+                        placeholder="応募理由、求人内容、気になる点など"
+                >{{ application.memo or "" }}</textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">編集を確定する</button>
+                <a
+                        href="{{ url_for('applications.detail', application_id=application.id) }}"
+                        class="btn btn-secondary"
+                >
+                    キャンセル
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

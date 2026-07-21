@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}応募情報詳細{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <section class="page-header">
+        <div>
+            <p class="page-description">APPLICATION</p>
+            <h1>応募情報詳細</h1>
+            <p class="page-description">
+                {{ application.company.company_name }} への応募情報を確認します。
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('companies.detail', company_id=application.company.id) }}"
+            class="btn btn-secondary"
+        >
+            企業詳細へ戻る
+        </a>
+    </section>
+
+    <div class="detail-card">
+        <dl class="detail-list">
+            <div class="detail-row">
+                <dt>企業名</dt>
+                <dd>{{ application.company.company_name }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>応募職種</dt>
+                <dd>{{ application.job_title }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>応募経路</dt>
+                <dd>{{ application.application_route or "-" }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>選考状況</dt>
+                <dd>
+                    <span class="badge rounded-pill text-bg-light">
+                        {{ application.status }}
+                    </span>
+                </dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>応募日</dt>
+                <dd>
+                    {% if application.application_date %}
+                        {{ application.application_date.strftime("%Y-%m-%d") }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>対応期限</dt>
+                <dd>
+                    {% if application.deadline %}
+                        {{ application.deadline.strftime("%Y-%m-%d") }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>給与</dt>
+                <dd>{{ application.salary or "-" }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>勤務形態</dt>
+                <dd>{{ application.work_style or "-" }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>応募メモ</dt>
+                <dd class="detail-memo">{{ application.memo or "-" }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>登録日</dt>
+                <dd>{{ application.created_at.strftime("%Y-%m-%d") }}</dd>
+            </div>
+
+            <div class="detail-row">
+                <dt>更新日</dt>
+                <dd>{{ application.updated_at.strftime("%Y-%m-%d") }}</dd>
+            </div>
+        </dl>
+
+        <div class="form-actions">
+            <a
+                href="{{ url_for('applications.edit', application_id=application.id) }}"
+                class="btn btn-primary"
+            >
+                編集する
+            </a>
+
+            <a
+                href="{{ url_for('companies.detail', company_id=application.company.id) }}"
+                class="btn btn-secondary"
+            >
+                企業詳細へ戻る
+            </a>
+
+            <form
+                method="post"
+                action="{{ url_for('applications.delete', application_id=application.id) }}"
+                onsubmit="return confirm('この応募情報を削除しますか？');"
+            >
+                <button type="submit" class="btn btn-outline-danger">
+                    削除する
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

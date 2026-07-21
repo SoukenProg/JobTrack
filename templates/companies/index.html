@@ -47,7 +47,14 @@
                                 </td>
                                 <td>{{ company.created_at.strftime("%Y-%m-%d") }}</td>
                                 <td>
+
                                     <a
+                                            href="{{ url_for('companies.detail',company_id=company.id) }}"
+                                            class="btn btn-sm btn-primary"
+                                    >
+                                        詳細
+                                    </a>
+                                                                        <a
                                             href="{{ url_for('companies.edit', company_id=company.id) }}"
                                             class="btn btn-sm btn-outline-secondary"
                                     >
