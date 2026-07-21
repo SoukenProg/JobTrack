@@ -121,5 +121,67 @@
             </form>
         </div>
     </div>
+    <section class="mt-5" aria-labelledby="interview-heading">
+        
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+            <h2 id="interview-heading">面接情報</h2>
+                <p class="text-secondary mb-0">
+                    この応募に紐づく面接予定と結果を管理します。
+                </p>
+            </div>
+    
+            <a href="{{ url_for(
+                    'interviews.new',
+                    application_id=application.id
+                ) }}" class="btn btn-primary">
+                面接を追加
+            </a>
+        </div>
+            
+            {% if application.interviews %}
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle company-table">
+                        <thead>
+                            <tr>
+                                <th>日時</th>
+                                <th>段階</th>
+                                <th>形式</th>
+                                <th>担当者</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for interview in application.interviews %}
+                            <tr>
+                                <td>
+                                    {{ interview.interview_date.strftime(
+                                    "%Y-%m-%d %H:%M"
+                                    ) }}
+                                </td>
+                                <td>{{ interview.interview_round }}</td>
+                                <td>{{ interview.interview_type }}</td>
+                                <td>{{ interview.interviewer or "-" }}</td>
+                                <td>
+                                    <a href="{{ url_for(
+                                                'interviews.detail',
+                                                interview_id=interview.id
+                                            ) }}" class="btn btn-sm btn-outline-primary">
+                                        詳細
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <p>面接情報はまだ登録されていません。</p>
+            </div>
+            {% endif %}
+    </section>
 </div>
 {% endblock %}
