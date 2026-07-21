@@ -14,9 +14,6 @@ def parse_date(value):
         return None
 
     return datetime.strptime(value, "%Y-%m-%d")
-@bp.route("/applications")
-def index():
-    return render_template("applications/index.html")
 
 @bp.route("/companies/<int:company_id>/applications/new", methods=["GET", "POST"])
 def new(company_id):

@@ -88,13 +88,12 @@
 
             <div class="form-field">
                 <label for="work_style" class="form-label">勤務形態</label>
-                <input
-                        type="text"
-                        id="work_style"
-                        name="work_style"
-                        class="form-control"
-                        placeholder="例：出社、リモート、ハイブリッド"
-                >
+                <select id="work_style" name="work_style" class="form-select">
+                    <option value="">選択してください</option>
+                    {% for work_style in work_styles %}
+                    <option value="{{ work_style }}">{{ work_style }}</option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="form-field">
