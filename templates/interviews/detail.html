@@ -51,15 +51,11 @@
       </section>
     <section class="detail-card">
       <h2 class="detail-card-title">面接準備メモ</h2>
-      <div class="detail-memo">
-        {{ interview.prepare_memo or "未記入" }}
-      </div>
+      <div class="detail-memo">{{ interview.prepare_memo or "未記入" }}</div>
       </section>
     <section class="detail-card">
       <h2 class="detail-card-title">面接結果メモ</h2>
-      <div class="detail-memo">
-        {{ interview.result_memo or "未記入" }}
-      </div>
+      <div class="detail-memo">{{ interview.result_memo or "未記入" }}</div>
     </section>
     <div class="form-actions">
       <a href="{{ url_for('interviews.edit', interview_id=interview.id) }}" class="btn btn-primary">
