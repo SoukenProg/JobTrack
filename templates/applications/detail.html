@@ -164,12 +164,23 @@
                                 <td>{{ interview.interview_type }}</td>
                                 <td>{{ interview.interviewer or "-" }}</td>
                                 <td>
+                                    <div class="d-flex gap-2">
                                     <a href="{{ url_for(
                                                 'interviews.detail',
                                                 interview_id=interview.id
                                             ) }}" class="btn btn-sm btn-outline-primary">
                                         詳細
                                     </a>
+                                <a href="{{ url_for('interviews.edit', interview_id=interview.id) }}" class="btn btn-sm btn-outline-secondary">
+                                    編集
+                                </a>
+                                <form method="post" action="{{ url_for('interviews.delete', interview_id=interview.id) }}"
+                                    onsubmit="return confirm('この面接情報を削除しますか？');">
+                                    <button type="submit" class="btn btn-danger">
+                                        削除
+                                    </button>
+                                </form>
+                                </div>
                                 </td>
                             </tr>
                             {% endfor %}
