@@ -14,7 +14,7 @@ def parse_date(value):
     if not value:
         return None
 
-    return datetime.strptime(value, "%Y-%m-%d")
+    return datetime.strptime(value, "%Y-%m-%dT%H:%M")
 
 
 @bp.route(
@@ -73,13 +73,12 @@ def edit(interview_id):
 
         db.session.commit()
 
-        return redirect(url_for("interviews.detail"),interview_id=interview_id)
+        return redirect(url_for("interviews.detail",interview_id=interview_id))
     return render_template(
         "interviews/edit.html",
         interview=interview,
-        application_statuses=APPLICATION_STATUSES,
-        work_styles=WORK_STYLES,
-        application_routes=APPLICATION_ROUTES,
+        interview_types=INTERVIEW_TYPES,
+        interview_rounds=INTERVIEW_ROUNDS,
     )
 
 @bp.route("/interviews/<int:interview_id>/delete", methods=["POST"])
