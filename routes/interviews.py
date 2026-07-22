@@ -1,16 +1,15 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
-from sqlalchemy import select
 
-from models import Applications, Companies, Interviews, db
+from models import Applications,Interviews, db
 
 
-from constants import APPLICATION_STATUSES, WORK_STYLES, INTERVIEW_TYPES,INTERVIEW_ROUNDS,APPLICATION_ROUTES
+from constants import INTERVIEW_TYPES,INTERVIEW_ROUNDS
 
 bp = Blueprint("interviews", __name__)
 
 
-def parse_date(value):
+def parse_datetimetime(value):
     if not value:
         return None
 
@@ -26,7 +25,7 @@ def new(application_id):
     if request.method == "POST":
         interview = Interviews(
             application_id=application.id,
-            interview_date=parse_date(request.form.get("interview_date")),
+            interview_date=parse_datetimetime(request.form.get("interview_date")),
             interview_type=request.form["interview_type"].strip(),
             interview_round=request.form["interview_round"].strip(),
             interviewer=request.form.get("interviewer").strip(),
@@ -63,7 +62,7 @@ def edit(interview_id):
 
     if request.method == "POST":
 
-        interview.interview_date = parse_date(request.form.get("interview_date"))
+        interview.interview_date = parse_datetimetime(request.form.get("interview_date"))
         interview.interview_type=request.form["interview_type"].strip()
         interview.interview_round = request.form["interview_round"].strip()
         interview.interviewer = request.form.get("interviewer").strip()
