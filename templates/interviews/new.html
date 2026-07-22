@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}面接情報登録{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <section class="page-header">
+        <div>
+            <p class="page-description">INTERVIEW</p>
+            <h1>面接情報登録</h1>
+            <p class="page-description">
+                {{ application.company.company_name }} への面接情報を登録します。
+            </p>
+        </div>
+
+        <a href="{{ url_for('companies.detail', company_id=application.company.id) }}" class="btn btn-secondary">
+            企業詳細へ戻る
+        </a>
+    </section>
+
+    <form method="post" class="form-card">
+        <div class="form-field">
+            <label for="interview_date" class="form-label">面接日</label>
+            <input type="datetime-local" id="interview_date" name="interview_date" class="form-control">
+            <div class="form-text text-danger">必須項目です。</div>
+        </div>
+        <div class="form-field">
+            <label for="interview_type" class="form-label">面接形態</label>
+            <select id="interview_type" name="interview_type" class="form-select">
+                <option value="">選択してください</option>
+                {% for element in interview_types %}
+                <option value="{{ element }}">{{ element }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="interview_round" class="form-label">面接段階</label>
+            <select id="interview_round" name="interview_round" class="form-select" required>
+                <option value="">選択してください</option>
+                {% for round in interview_rounds %}
+                <option value="{{ round }}">{{ round }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="interviewer" class="form-label">面接官</label>
+            <input type="text" id="interviewer" name="interviewer" class="form-control" placeholder="例:人事">
+        </div>
+
+        <div class="form-field">
+            <label for="location" class="form-label">面談会場</label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="例：本社">
+
+        </div>
+
+        <div class="form-field">
+            <label for="prepare_memo" class="form-label">事前メモ</label>
+            <textarea id="prepare_memo" name="prepare_memo" class="form-control" rows="5" placeholder="想定質問、企業研究、逆質問など"></textarea>
+        </div>
+
+        <div class="form-field">
+            <label for="result_memo" class="form-label">結果メモ</label>
+            <textarea id="result_memo" name="result_memo" class="form-control" rows="5" placeholder="質問内容、回答の振り返り、次回への改善点など"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">登録する</button>
+            <a href="{{ url_for('companies.detail', company_id=application.company.id) }}" class="btn btn-secondary">
+                キャンセル
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

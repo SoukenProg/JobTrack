@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}面接情報登録{% endblock %}
+{% block content %}
+  <div class="page-container">
+    <section class="page-header">
+      <div>
+        <p class="page-description">INTERVIEW</p>
+        <h1>面接情報詳細</h1>
+        <p class="page-description">
+            {{ interview.application.company.company_name }} / 
+            {{ interview.interview_round }}の情報を確認します。
+        </p>
+      </div>
+      <a href="{{ url_for('applications.detail',
+                          application_id=interview.application.id) }}" class="btn btn-secondary">
+        応募詳細へ戻る
+      </a>
+    </section>
+    <section class="detail-card col-12">
+      <h2 class="detail-card-title">基本情報</h2>
+      <dl class="detail-list">
+        <div class="detail-row">
+          <dt>企業名</dt>
+          <dd>{{ interview.application.company.company_name }}</dd>
+        </div>
+        <div class="detail-row">
+          <dt>応募職種</dt>
+          <dd>{{ interview.application.job_title }}</dd>
+        </div>
+        <div class="detail-row">
+          <dt>面接段階</dt>
+          <dd>{{ interview.interview_round }}</dd>
+        </div>
+        <div class="detail-row">
+          <dt>面接形式</dt>
+          <dd>{{ interview.interview_type }}</dd>
+        </div>
+        <div class="detail-row">
+          <dt>面接日時</dt>
+          <dd>{{ interview.interview_date.strftime("%Y-%m-%d %H:%M") }}</dd>
+        </div>
+        <div class="detail-row">
+          <dt>担当者</dt>
+          <dd>{{ interview.interviewer or "-" }}</dd>
+        </div>
+        <div class="detail-row">
+          <dt>場所・URL</dt>
+          <dd>{{ interview.location or "-" }}</dd>
+        </div>
+      </dl>
+      </section>
+    <section class="detail-card">
+      <h2 class="detail-card-title">面接準備メモ</h2>
+      <div class="detail-memo">{{ interview.prepare_memo or "未記入" }}</div>
+      </section>
+    <section class="detail-card">
+      <h2 class="detail-card-title">面接結果メモ</h2>
+      <div class="detail-memo">{{ interview.result_memo or "未記入" }}</div>
+    </section>
+    <div class="form-actions">
+      <a href="{{ url_for('interviews.edit', interview_id=interview.id) }}" class="btn btn-primary">
+        編集する
+      </a>
+    
+      <a href="{{ url_for('applications.detail', application_id=interview.application.id) }}" class="btn btn-secondary">
+        応募詳細へ戻る
+      </a>
+    
+      <form method="post" action="{{ url_for('interviews.delete', interview_id=interview.id) }}"
+        onsubmit="return confirm('この面接情報を削除しますか？');">
+        <button type="submit" class="btn btn-outline-danger">
+          削除する
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
