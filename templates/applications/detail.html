@@ -121,5 +121,78 @@
             </form>
         </div>
     </div>
+    <section class="mt-5" aria-labelledby="interview-heading">
+        
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+            <h2 id="interview-heading">面接情報</h2>
+                <p class="text-secondary mb-0">
+                    この応募に紐づく面接予定と結果を管理します。
+                </p>
+            </div>
+    
+            <a href="{{ url_for(
+                    'interviews.new',
+                    application_id=application.id
+                ) }}" class="btn btn-primary">
+                面接を追加
+            </a>
+        </div>
+            
+            {% if application.interviews %}
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle company-table">
+                        <thead>
+                            <tr>
+                                <th>日時</th>
+                                <th>段階</th>
+                                <th>形式</th>
+                                <th>担当者</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for interview in application.interviews %}
+                            <tr>
+                                <td>
+                                    {{ interview.interview_date.strftime(
+                                    "%Y-%m-%d %H:%M"
+                                    ) }}
+                                </td>
+                                <td>{{ interview.interview_round }}</td>
+                                <td>{{ interview.interview_type }}</td>
+                                <td>{{ interview.interviewer or "-" }}</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                    <a href="{{ url_for(
+                                                'interviews.detail',
+                                                interview_id=interview.id
+                                            ) }}" class="btn btn-sm btn-outline-primary">
+                                        詳細
+                                    </a>
+                                <a href="{{ url_for('interviews.edit', interview_id=interview.id) }}" class="btn btn-sm btn-outline-secondary">
+                                    編集
+                                </a>
+                                <form method="post" action="{{ url_for('interviews.delete', interview_id=interview.id) }}"
+                                    onsubmit="return confirm('この面接情報を削除しますか？');">
+                                    <button type="submit" class="btn btn-danger">
+                                        削除
+                                    </button>
+                                </form>
+                                </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <p>面接情報はまだ登録されていません。</p>
+            </div>
+            {% endif %}
+    </section>
 </div>
 {% endblock %}

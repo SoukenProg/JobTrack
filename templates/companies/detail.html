@@ -157,6 +157,12 @@
                                     >
                                         編集
                                     </a>
+                                    <form method="post" action="{{ url_for('applications.delete',  application_id=application.id) }}"
+                                        onsubmit="return confirm('この応募情報を削除しますか？');">
+                                        <button type="submit" class="btn btn-danger">
+                                            削除
+                                        </button>
+                                    </form> 
                                 </div>
                             </td>
                         </tr>
