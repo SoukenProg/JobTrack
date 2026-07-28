@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import select
 
+from constants import BADGE_COLOR
 from models import Applications, Companies, db
 
 
@@ -49,8 +50,8 @@ def detail(application_id):
     application = db.get_or_404(Applications, application_id)
 
     return render_template(
-        "applications/detail.html",
-        application=application
+        "applications/detail.html", application=application,
+        bg_color=BADGE_COLOR
     )
 
 

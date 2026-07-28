@@ -13,9 +13,9 @@
         <div class="detail-card">
             {% set stat_cards =[
         ("登録済",stats.companies,"社","#a0d8ef"),
-        ("選考中",stats.active,"社","#f7b97d"),
+        ("選考中",stats.active,"件","#f7b97d"),
         ("面接予定",stats.interview,"件","#938cbf"),
-        ("内定",stats.success,"社","#009856"),
+        ("内定",stats.success,"件","#009856"),
     ] %}
             <div class="row g-4">
                 {% for label, value, unit, color in stat_cards %}
@@ -43,7 +43,7 @@
         <section class="mt-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                    <h2 class="h4 mb-1">応募企業一覧</h2>
+                    <h2 class="h4 mb-1">最近追加した応募情報</h2>
                     <p class="text-secondary mb-0">
                         最近登録した応募情報を確認できます。
                     </p>
@@ -76,7 +76,7 @@
                                     </td>
                                     <td>{{ application.job_title }}</td>
                                     <td>
-                                <span class="badge rounded-pill text-bg-light">
+                                <span class="badge rounded-pill text-bg-{{bg_color[application.status]}}">
                                     {{ application.status }}
                                 </span>
                                     </td>

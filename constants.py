@@ -41,3 +41,15 @@ INTERVIEW_TYPES = [
     "オンライン",
     "その他",
 ]
+
+BADGE_COLOR = {
+    "未応募":"secondary",
+    "応募済み":"primary",
+    "書類選考中":"info",
+    "一次面接":"warning",
+    "二次面接":"warning",
+    "最終面接":"warning",
+    "内定":"success",
+    "辞退":"danger",
+    "不採用":"secondary",
+}

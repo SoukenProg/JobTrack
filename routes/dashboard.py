@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import func, select
 from flask import Blueprint, render_template
-from constants import APPLICATION_STATUSES
+from constants import APPLICATION_STATUSES, BADGE_COLOR
 from models import Companies, Applications, Interviews, db
 
 bp = Blueprint("dashboard", __name__)
@@ -34,4 +34,4 @@ def index():
             select(func.count()).select_from(Applications).where(Applications.status == "内定")),
     }
 
-    return render_template("dashboard.html", stats=stats,applications=applications,interviews=interviews)
+    return render_template("dashboard.html", stats=stats,applications=applications,interviews=interviews,bg_color=BADGE_COLOR)
