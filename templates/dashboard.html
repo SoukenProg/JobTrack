@@ -72,7 +72,9 @@
                             {% for application in applications %}
                                 <tr>
                                     <td class="company-name">
+                                        <a href="{{url_for('companies.detail',company_id=application.company.id)}}">
                                         {{ application.company.company_name }}
+                                        </a>
                                     </td>
                                     <td>{{ application.job_title }}</td>
                                     <td>
@@ -145,7 +147,9 @@
                                         </a>
                                     </td>
                                     <td>
+                                        <a href="{{ url_for('applications.detail', application_id=interview.application.id )}}">
                                         {{ interview.application.job_title }}
+                                        </a>
                                     </td>
                                     <td>
                                 <span class="badge rounded-pill text-bg-light">
