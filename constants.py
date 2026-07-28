@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 INTERVIEW_STAGE_NAMES = [
     "一次面接",
     "二次面接",
@@ -41,7 +43,7 @@ INTERVIEW_TYPES = [
     "オンライン",
     "その他",
 ]
-
+BADGE_COLOR = defaultdict(lambda: "secondary")
 BADGE_COLOR = {
     "未応募":"secondary",
     "応募済み":"primary",
@@ -50,6 +52,6 @@ BADGE_COLOR = {
     "二次面接":"warning",
     "最終面接":"warning",
     "内定":"success",
-    "辞退":"danger",
-    "不採用":"secondary",
+    "辞退":"secondary",
+    "不採用":"danger",
 }
