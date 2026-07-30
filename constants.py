@@ -43,8 +43,7 @@ INTERVIEW_TYPES = [
     "オンライン",
     "その他",
 ]
-BADGE_COLOR = defaultdict(lambda: "secondary")
-BADGE_COLOR = {
+BADGE_COLOR = defaultdict(lambda: "secondary", {
     "未応募":"secondary",
     "応募済み":"primary",
     "書類選考中":"info",
@@ -54,4 +53,4 @@ BADGE_COLOR = {
     "内定":"success",
     "辞退":"secondary",
     "不採用":"danger",
-}
+})
