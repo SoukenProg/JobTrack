@@ -28,6 +28,7 @@
         </thead>
         <tbody>
           {% for application in applications%}
+          {% set deadline_info = calc_deadline(application.deadline) %}
           <tr>
             <td class="fw-semibold">
               <a href="{{ url_for('companies.detail', company_id=application.company.id) }}">
@@ -48,11 +49,15 @@
               {% endif %}
             </td>
             <td>
-              {% if application.deadline %}
-              {{ application.deadline.strftime("%Y-%m-%d")}}
-              {% else %}
-              {{"未設定"}}
-              {% endif %}</td>
+              <span class="text-{{ deadline_info.color }}">
+                {{ application.deadline.strftime("%Y/%m/%d")
+                if application.deadline else deadline_info.comment }}
+
+                {% if application.deadline and deadline_info.comment %}
+                （{{ deadline_info.comment }}）
+                {% endif %}
+              </span>
+            </td>
             <td>
 
               <a href="{{ url_for('applications.detail',application_id=application.id) }}"

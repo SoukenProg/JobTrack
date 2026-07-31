@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import select
 
@@ -18,6 +18,23 @@ def parse_date(value):
     return datetime.strptime(value, "%Y-%m-%d")
 
 
+# 日付を与えて見た目を変える関数
+def calc_deadline(deadline):
+    if not deadline:
+        return {"color": "secondary", "comment": "未設定"}
+
+    today = datetime.now().date()
+    three_days_later = today + timedelta(days=3)
+    if deadline.date() < today:
+        return {"color": "danger", "comment": "期限切れ"}
+    elif deadline.date() == today:
+        return {"color": "danger", "comment": "本日まで"}
+    elif deadline.date() <= three_days_later:
+        return {"color": "warning", "comment": ""}
+    else:
+        return {"color": "body", "comment": ""}
+
+
 @bp.route("/applications")
 def index():
     applications = (
@@ -29,7 +46,7 @@ def index():
     )
 
     return render_template(
-        "applications/index.html", applications=applications, bg_color=BADGE_COLOR
+        "applications/index.html", applications=applications, bg_color=BADGE_COLOR,calc_deadline=calc_deadline
     )
 
 
