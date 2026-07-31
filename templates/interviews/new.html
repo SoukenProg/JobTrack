@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}面接情報登録{% endblock %}
+{% block title %}面接情報登録 | {% endblock %}
 
 {% block content %}
 <div class="page-container">
@@ -21,7 +21,7 @@
     <form method="post" class="form-card">
         <div class="form-field">
             <label for="interview_date" class="form-label">面接日</label>
-            <input type="datetime-local" id="interview_date" name="interview_date" class="form-control">
+            <input type="datetime-local" id="interview_date" name="interview_date" class="form-control" required>
             <div class="form-text text-danger">必須項目です。</div>
         </div>
         <div class="form-field">

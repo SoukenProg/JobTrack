@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}応募情報詳細{% endblock %}
+{% block title %}応募情報詳細 | {% endblock %}
 
 {% block content %}
 <div class="page-container">
@@ -41,7 +41,7 @@
             <div class="detail-row">
                 <dt>選考状況</dt>
                 <dd>
-                    <span class="badge rounded-pill text-bg-light">
+                    <span class="badge rounded-pill text-bg-{{bg_color[application.status]}}">
                         {{ application.status }}
                     </span>
                 </dd>

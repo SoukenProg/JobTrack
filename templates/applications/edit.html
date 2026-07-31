@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}応募情報登録{% endblock %}
+{% block title %}応募情報編集 | {% endblock %}
 
 {% block content %}
     <div class="page-container">
@@ -93,7 +93,7 @@
                         name="salary"
                         class="form-control"
                         placeholder="例：月給25万円〜"
-                        value="{{ application.salary or "" }}"
+                        value="{{ application.salary or '' }}"
                 >
             </div>
             <div class="form-field">

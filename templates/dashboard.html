@@ -1,179 +1,194 @@
 {% extends "base.html" %}
-{% block title %}ダッシュボード{% endblock %}
+{% block title %}ダッシュボード | {% endblock %}
 {% block content %}
-    <div class="page-container">
-        <section class="page-header">
-            <div>
-                <p class="page-description">DASHBOARD</p>
-                <h1>ダッシュボード</h1>
-            </div>
-            <a href="{{ url_for("companies.new") }}" class="btn btn-primary">企業を登録する</a>
-        </section>
+<div class="page-container">
+    <section class="page-header">
+        <div>
+            <p class="page-description">DASHBOARD</p>
+            <h1>ダッシュボード</h1>
+        </div>
+        <a href="{{ url_for('companies.new') }}" class="btn btn-primary">企業を登録する</a>
+    </section>
 
-        <div class="detail-card">
-            {% set stat_cards =[
+    <div class="detail-card">
+        {% set stat_cards =[
         ("登録済",stats.companies,"社","#a0d8ef"),
-        ("選考中",stats.active,"社","#f7b97d"),
+        ("選考中",stats.active,"件","#f7b97d"),
         ("面接予定",stats.interview,"件","#938cbf"),
-        ("内定",stats.success,"社","#009856"),
-    ] %}
-            <div class="row g-4">
-                {% for label, value, unit, color in stat_cards %}
-                    <div class="col-12 col-md-6">
-                        <div class="card shadow-sm h-100 dashboard-card" style="border-left: 6px solid {{ color }};">
-                            <div class="card-body p-4 d-flex flex-column justify-content-center">
-                    <span class="badge rounded-pill text-bg-light align-self-start mb-3">
-                        {{ label }}
-                    </span>
+        ("内定",stats.success,"件","#009856"),
+        ] %}
+        <div class="row g-4">
+            {% for label, value, unit, color in stat_cards %}
+            <div class="col-12 col-md-6">
+                <div class="card shadow-sm h-100 dashboard-card" style="border-left: 6px solid {{ color }};">
+                    <div class="card-body p-4 d-flex flex-column justify-content-center">
+                        <span class="badge rounded-pill text-bg-light align-self-start mb-3">
+                            {{ label }}
+                        </span>
 
-                                <div class="d-flex align-items-end gap-2">
-                                    <p class="display-5 fw-bold mb-0 lh-1">
-                                        {{ value }}
-                                    </p>
-                                    <p class="fs-5 mb-1 text-secondary">
-                                        {{ unit }}
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="d-flex align-items-end gap-2">
+                            <p class="display-5 fw-bold mb-0 lh-1">
+                                {{ value }}
+                            </p>
+                            <p class="fs-5 mb-1 text-secondary">
+                                {{ unit }}
+                            </p>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        </div>
-        <section class="mt-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h2 class="h4 mb-1">応募企業一覧</h2>
-                    <p class="text-secondary mb-0">
-                        最近登録した応募情報を確認できます。
-                    </p>
                 </div>
-
-                <a href="{{ url_for('companies.index') }}" class="btn btn-outline-primary">
-                    企業一覧へ
-                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <section class="mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="h4 mb-1">最近追加した応募情報</h2>
+                <p class="text-secondary mb-0">
+                    最近登録した応募情報を確認できます。
+                </p>
             </div>
 
-            {% if applications %}
-                <div class="table-card">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle company-table">
-                            <thead>
-                            <tr>
-                                <th>企業名</th>
-                                <th>応募職種</th>
-                                <th>選考状況</th>
-                                <th>応募経路</th>
-                                <th>応募日</th>
-                                <th>対応期限</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for application in applications %}
-                                <tr>
-                                    <td class="company-name">
-                                        {{ application.company.company_name }}
-                                    </td>
-                                    <td>{{ application.job_title }}</td>
-                                    <td>
-                                <span class="badge rounded-pill text-bg-light">
+            <a href="{{ url_for('companies.index') }}" class="btn btn-outline-primary">
+                企業一覧へ
+            </a>
+        </div>
+
+        {% if applications %}
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle company-table">
+                    <thead>
+                        <tr>
+                            <th>企業名</th>
+                            <th>応募職種</th>
+                            <th>選考状況</th>
+                            <th>応募経路</th>
+                            <th>応募日</th>
+                            <th>対応期限</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr>
+                            <td class="company-name">
+                                <a href="{{url_for('companies.detail',company_id=application.company.id)}}">
+                                    {{ application.company.company_name }}
+                                </a>
+                            </td>
+                            <td><a href="{{url_for('applications.detail',application_id=application.id)}}">
+                                    {{ application.job_title }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill text-bg-{{bg_color[application.status]}}">
                                     {{ application.status }}
                                 </span>
-                                    </td>
-                                    <td>{{ application.application_route or "-" }}</td>
-                                    <td>
-                                        {% if application.application_date %}
-                                            {{ application.application_date.strftime("%Y-%m-%d") }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if application.deadline %}
-                                            {{ application.deadline.strftime("%Y-%m-%d") }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            {% else %}
-                <div class="empty-state">
-                    <p>応募情報はまだ登録されていません。</p>
-                    <a href="{{ url_for('companies.index') }}" class="btn btn-primary">
-                        企業一覧から応募情報を登録する
-                    </a>
-                </div>
-            {% endif %}
-        </section>
-        <section class="mt-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h2 class="h4 mb-1">直近の面接</h2>
-                    <p class="text-secondary mb-0">
-                        予定されている面接を確認できます。
-                    </p>
-                </div>
+                            </td>
+                            <td>{{ application.application_route or "-" }}</td>
+                            <td>
+                                {% if application.application_date %}
+                                {{ application.application_date.strftime("%Y-%m-%d") }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if application.deadline %}
+                                {{ application.deadline.strftime("%Y-%m-%d") }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            {% if interviews %}
-                <div class="table-card">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle company-table">
-                            <thead>
-                            <tr>
-                                <th>面接日</th>
-                                <th>企業名</th>
-                                <th>応募職種</th>
-                                <th>面接段階</th>
-                                <th>形式</th>
-                                <th>場所・URL</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for interview in interviews %}
-                                <tr>
-                                    <td>
-                                        {{ interview.interview_date.strftime("%Y-%m-%d %H:%M") }}
-                                    </td>
-                                    <td class="company-name">
-                                        <a href="{{ url_for('companies.detail', company_id=interview.application.company.id) }}">
-                                            {{ interview.application.company.company_name }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {{ interview.application.job_title }}
-                                    </td>
-                                    <td>
-                                <span class="badge rounded-pill text-bg-light">
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>応募情報はまだ登録されていません。</p>
+            <a href="{{ url_for('companies.index') }}" class="btn btn-primary">
+                企業一覧から応募情報を登録する
+            </a>
+        </div>
+        {% endif %}
+    </section>
+    <section class="mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="h4 mb-1">直近の面接</h2>
+                <p class="text-secondary mb-0">
+                    予定されている面接を確認できます。
+                </p>
+            </div>
+        </div>
+        {% if interviews %}
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle company-table">
+                    <thead>
+                        <tr>
+                            <th>面接日</th>
+                            <th>企業名</th>
+                            <th>応募職種</th>
+                            <th>面接段階</th>
+                            <th>形式</th>
+                            <th>場所・URL</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for interview in interviews %}
+                        <tr>
+                            <td>
+                                {{ interview.interview_date.strftime("%Y-%m-%d %H:%M") }}
+                            </td>
+                            <td class="company-name">
+                                <a
+                                    href="{{ url_for('companies.detail', company_id=interview.application.company.id) }}">
+                                    {{ interview.application.company.company_name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('applications.detail', application_id=interview.application.id )}}">
+                                    {{ interview.application.job_title }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill text-bg-{{bg_color[interview.interview_round]}}">
                                     {{ interview.interview_round }}
                                 </span>
-                                    </td>
-                                    <td>
-                                        {{ interview.interview_type }}
-                                    </td>
-                                    <td>
-                                        {% if interview.location %}
-                                            {{ interview.location }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            {% else %}
+                            </td>
+                            <td>
+                                {{ interview.interview_type }}
+                            </td>
+                            <td>
+                                {% if interview.location %}
+                                {{ interview.location }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('interviews.detail',interview_id=interview.id) }}"
+                                    class="btn btn-sm btn-primary">
+                                    詳細
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
 
-                <div class="empty-state">
-                    <p>直近の面接予定はありません。</p>
-                </div>
-            {% endif %}
-        </section>
-    </div>
+        <div class="empty-state">
+            <p>直近の面接予定はありません。</p>
+        </div>
+        {% endif %}
+    </section>
+</div>
 {% endblock %}

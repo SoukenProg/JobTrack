@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import select
 
 from models import Applications, Companies, db
+from constants import BADGE_COLOR
 
 bp = Blueprint("companies", __name__, url_prefix="/companies")
 
@@ -37,7 +38,9 @@ def new():
 @bp.route("/<int:company_id>")
 def detail(company_id):
     company = db.get_or_404(Companies, company_id)
-    return render_template("companies/detail.html", company=company)
+    return render_template(
+        "companies/detail.html", company=company, bg_color=BADGE_COLOR
+    )
 
 
 @bp.route("/<int:company_id>/edit", methods=["GET", "POST"])

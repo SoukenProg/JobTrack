@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{{ company.company_name }} | {% endblock %}
+
 {% block content %}
     <div class="page-container">
         <section class="page-header">
@@ -124,7 +126,7 @@
                                 </a>
                             </td>
                             <td>
-                                <span class="badge rounded-pill text-bg-light">
+                                <span class="badge rounded-pill  text-bg-{{bg_color[application.status]}}">
                                     {{ application.status }}
                                 </span>
                             </td>

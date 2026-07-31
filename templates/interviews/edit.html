@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}面接情報登録{% endblock %}
+{% block title %}面接情報編集 | {% endblock %}
 
 {% block content %}
 <div class="page-container">
     <section class="page-header">
         <div>
             <p class="page-description">INTERVIEW</p>
-            <h1>面接情報登録</h1>
+            <h1>面接情報編集</h1>
             <p class="page-description">
                 {{ interview.application.company.company_name }} への面接情報を編集します。
             </p>
@@ -21,7 +21,7 @@
     <form method="post" class="form-card">
         <div class="form-field">
             <label for="interview_date" class="form-label">面接日</label>
-            <input type="datetime-local" id="interview_date" name="interview_date" value="{{interview.interview_date.strftime('%Y-%m-%dT%H:%M') if interview.interview_date else ''}}" class="form-control" >
+            <input type="datetime-local" id="interview_date" name="interview_date" value="{{interview.interview_date.strftime('%Y-%m-%dT%H:%M') if interview.interview_date else ''}}" class="form-control" required >
             <div class="form-text text-danger">必須項目です。</div>
         </div>
         <div class="form-field">
@@ -66,7 +66,7 @@
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">登録する</button>
+            <button type="submit" class="btn btn-primary">更新する</button>
             <a href="{{ url_for('applications.detail', application_id=interview.application.id) }}" class="btn btn-secondary">
                 キャンセル
             </a>
