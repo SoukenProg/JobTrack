@@ -34,7 +34,11 @@
               </a>
             </td>
             <td>{{ application.job_title }}</td>
-            <td class="badge rounded-pill text-bg-{{bg_color[application.status]}}">{{ application.status }}</td>
+            <td>
+              <span class="badge rounded-pill text-bg-{{bg_color[application.status]}}">
+                {{ application.status }}
+              </span>
+            </td>
             <td>
               {% if application.application_date %}
               {{ application.application_date.strftime("%Y-%m-%d")}}
