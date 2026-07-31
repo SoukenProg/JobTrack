@@ -3,4 +3,75 @@
 {% block title %}応募情報一覧 | {% endblock %}
 
 {% block content %}
+<div class="page-container companies-page">
+  <section class="page-header">
+    <div>
+      <h1>応募一覧</h1>
+      <p class="page-description">登録した応募先を一覧で確認できます。</p>
+    </div>
+  </section>
+
+  {% if applications %}
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle company-table">
+        <thead class="table-light">
+          <tr>
+            <th>企業名</th>
+            <th>応募職種</th>
+            <th>選考状況</th>
+            <th>応募日</th>
+            <th>対応期限</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for application in applications%}
+          <tr>
+            <td class="fw-semibold">
+              <a href="{{ url_for('companies.detail', company_id=application.company.id) }}">
+                {{ application.company.company_name }}
+              </a>
+            </td>
+            <td>{{ application.job_title }}</td>
+            <td class="badge rounded-pill text-bg-{{bg_color[application.status]}}">{{ application.status }}</td>
+            <td>
+              {% if application.application_date %}
+              {{ application.application_date.strftime("%Y-%m-%d")}}
+              {% else %}
+              {{"-"}}
+              {% endif %}
+            </td>
+            <td>
+              {% if application.deadline %}
+              {{ application.deadline.strftime("%Y-%m-%d")}}
+              {% else %}
+              {{"-"}}
+              {% endif %}</td>
+            <td>
+
+              <a href="{{ url_for('applications.detail',application_id=application.id) }}"
+                class="btn btn-sm btn-primary">
+                詳細
+              </a>
+              <a href="{{ url_for('applications.edit', application_id=application.id) }}"
+                class="btn btn-sm btn-outline-secondary">
+                編集
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p>まだ応募情報が登録されていません。</p>
+    <a href="{{ url_for('applications.new') }}" class="btn btn-primary">
+      最初の応募先を登録する
+    </a>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

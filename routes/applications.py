@@ -6,15 +6,32 @@ from constants import BADGE_COLOR
 from models import Applications, Companies, db
 
 
-from constants import APPLICATION_STATUSES, WORK_STYLES, APPLICATION_ROUTES
+from constants import APPLICATION_STATUSES, WORK_STYLES, APPLICATION_ROUTES, BADGE_COLOR
 
-bp = Blueprint('applications', __name__)
+bp = Blueprint("applications", __name__)
+
 
 def parse_date(value):
     if not value:
         return None
 
     return datetime.strptime(value, "%Y-%m-%d")
+
+
+@bp.route("/applications")
+def index():
+    applications = (
+        db.session.execute(
+            select(Applications).order_by(Applications.deadline.asc().nulls_last())
+        )
+        .scalars()
+        .all()
+    )
+
+    return render_template(
+        "applications/index.html", applications=applications, bg_color=BADGE_COLOR
+    )
+
 
 @bp.route("/companies/<int:company_id>/applications/new", methods=["GET", "POST"])
 def new(company_id):
@@ -45,13 +62,13 @@ def new(company_id):
         application_routes=APPLICATION_ROUTES,
     )
 
+
 @bp.route("/applications/<int:application_id>")
 def detail(application_id):
     application = db.get_or_404(Applications, application_id)
 
     return render_template(
-        "applications/detail.html", application=application,
-        bg_color=BADGE_COLOR
+        "applications/detail.html", application=application, bg_color=BADGE_COLOR
     )
 
 
@@ -61,7 +78,9 @@ def edit(application_id):
 
     if request.method == "POST":
         application.job_title = request.form["job_title"].strip()
-        application.application_route = request.form.get("application_route", "").strip()
+        application.application_route = request.form.get(
+            "application_route", ""
+        ).strip()
         application.status = request.form["status"].strip()
         application.application_date = parse_date(request.form.get("application_date"))
         application.deadline = parse_date(request.form.get("deadline"))
@@ -80,6 +99,7 @@ def edit(application_id):
         work_styles=WORK_STYLES,
         application_routes=APPLICATION_ROUTES,
     )
+
 
 @bp.route("/applications/<int:application_id>/delete", methods=["POST"])
 def delete(application_id):
